@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Page</title>
+</head>
+<body>
+<form>
+    <input id="stockSymbol" type="text">
+    <input onClick= "getPriceQuote()" type="button"
+           value="Get Price">
+</form>
+<span id="priceQuote"></span>
+<script type="text/javascript">
+    var ws = new WebSocket(
+            "ws://localhost:8080/YakovFainJavaEE_Lesson28/stockprice");
+    ws.onmessage = function(event) {
+        var mySpan = document.getElementById("priceQuote");
+        mySpan.innerHTML=event.data;
+    };
+    function getPriceQuote(){
+        var symbol = document.getElementById("stockSymbol");
+        ws.send(symbol.value);
+    }
+</script>
+</body>
+</html>
