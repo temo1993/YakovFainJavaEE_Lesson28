@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GetQuote Page</title>
+</head>
+<body>
+<form>
+    <input id="input" type="text" title="stock text"/>
+    <input type="button" onclick="getPrice()" value="Get Price"/>
+</form>
+<span id="quotePrice"></span>
+<script type="text/javascript">
+    var websocket = new WebSocket("ws://localhost:8080/YakovFainJavaEE_Lesson28/stock");
+    websocket.onmessage = function(event){
+        var myspan = document.getElementById("quotePrice");
+        myspan.innerHTML = event.data;
+    };
+        function getPrice(){
+            var symbol = document.getElementById("input");
+            websocket.send(symbol.value);
+    }
+    websocket.onerror = function(event){
+        console.log("Error ", event)
+    }
+</script>
+</body>
+</html>
