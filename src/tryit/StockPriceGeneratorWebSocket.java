@@ -35,7 +35,6 @@ public class StockPriceGeneratorWebSocket {
 
     @OnMessage
     public Stock getPriceQuote(Stock stock, Session session){
-        session.getId();
         allSessions = session.getOpenSessions();
 
         // start the scheduler on the very first connection
