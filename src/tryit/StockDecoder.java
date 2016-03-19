@@ -5,7 +5,7 @@ import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
 public class StockDecoder implements Decoder.Text<Stock>{
-    boolean willDecode = false;
+    private static String symbolEntered;
 
 	@Override
 	public void init(EndpointConfig config) {}
@@ -18,14 +18,13 @@ public class StockDecoder implements Decoder.Text<Stock>{
 	}
 
     public boolean willDecode(String symbol) {
-		StockPriceGeneratorWebSocket stockPriceGenerator = new StockPriceGeneratorWebSocket();
-        willDecode = (stockPriceGenerator.getSupportedSymbols().indexOf(symbol.toUpperCase()) != -1);
-        return willDecode;
+        symbolEntered = symbol;
+		return true;
 	}
 
 	public void destroy() {}
 
-    boolean decoderSupported(){
-        return willDecode;
+    public static String getSymbol(){
+        return symbolEntered;
     }
 }

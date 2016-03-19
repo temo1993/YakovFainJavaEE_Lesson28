@@ -10,9 +10,8 @@ public class StockEncoder implements Encoder.Text<Stock>{
 
 	public String encode(Stock stock) throws EncodeException {
         StockPriceGeneratorWebSocket stocks = new StockPriceGeneratorWebSocket();
-        StockDecoder decoder = new StockDecoder();
         String encode;
-        if (decoder.decoderSupported()) {
+        if (stocks.getSupportedSymbols().indexOf(StockDecoder.getSymbol().toUpperCase()) != -1) {
             System.out.println("In Encoder: Serializing Stock object into String");
             encode = stock.getSymbol() + ": " + stock.getPrice();
         } else {
